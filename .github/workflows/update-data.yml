@@ -3,7 +3,7 @@ name: Update data
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 * * * *'
+    - cron: '0 */2 * * *'
 
 jobs:
   build:
@@ -25,6 +25,8 @@ jobs:
       run: python script.py
     - name: Commit changes
       run: |
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
         git add .
         git commit -m "更新数据"
     - name: Push changes

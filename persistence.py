@@ -10,7 +10,6 @@ for key in category_id_map.keys():
 
 
 def _handler(category):
-    print(category)
     global all_data
     all_data[category] = list(fetch_by_category(category))
 

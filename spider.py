@@ -182,7 +182,6 @@ def _article_list_fetcher(url, additional_json=None, data_container="article_inf
         cursor = data["cursor"]
         for record in data["data"]:
             yield record[data_container]
-        break # test
 
 
 def fetch_recommended():

@@ -170,13 +170,21 @@ def _post_request_handler(*args, **kwargs):
     return data
 
 
-def _article_list_fetcher(url, additional_json=None, data_container="article_info"):
+def _article_list_fetcher(url, additional_json=None, data_container="article_info", max_retries=5):
     cursor = "0"
     while True:
         json_data = {"cursor": cursor}
         if additional_json is not None:
             json_data.update(additional_json)
-        data = _post_request_handler(url, json=json_data)
+        retry_count = 0
+        while True:
+            try:
+                data = _post_request_handler(url, json=json_data)
+                break
+            except Exception as e:
+                retry_count += 1
+                if retry_count > max_retries:
+                    raise e
         if not data["has_more"]:
             break
         cursor = data["cursor"]

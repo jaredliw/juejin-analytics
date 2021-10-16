@@ -33,6 +33,10 @@ for key in category_id_map.keys():
         table_content.append(cols["digg_count"])
         table_content.append(cols["comment_count"])
         table_content.append(f"{cols['score']:.2f}")
+    print(key)
+    print(top10)
+    print(header + table_content)
+    print()
     file.new_table(len(header), 11, header + table_content)
 
 file.create_md_file()

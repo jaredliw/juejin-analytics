@@ -3,8 +3,7 @@
 
 
 # 掘金数据分析
-[![Update data](https://github.com/jaredliw/juejin-analytics/actions/workflows/update-
-data.yml/badge.svg)](https://github.com/jaredliw/juejin-analytics/actions/workflows/update-data.yml)
+[![Update data](https://github.com/jaredliw/juejin-analytics/actions/workflows/update-data.yml/badge.svg)](https://github.com/jaredliw/juejin-analytics/actions/workflows/update-data.yml)
 ## 数据分析
   
 此仓库包含 **240300 篇文章**，其中后端文章 79669 篇，前端文章 90582 篇，Android 文章 21055 篇，iOS 文章 11888 篇，人工智能文章 7591 篇，开发工具文章 4606 篇，代码人生文章 5605 篇，阅读文章 19304 篇。

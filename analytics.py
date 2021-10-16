@@ -14,6 +14,7 @@ del json_data
 df = pd.DataFrame(data)
 del data
 
+df = df[~df.duplicated(subset="article_id")]
 df["mtime"] = pd.to_datetime(df['mtime'], unit='s')
 df["time_diff"] = (datetime.now() - df["mtime"]).dt.days
 df["score"] = (df["view_count"] * 0.1 +

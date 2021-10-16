@@ -24,4 +24,4 @@ for thread in thread_pool:
     thread.join()
 
 with open("juejin_articles.json", "w", encoding='utf8') as file:
-    dump(all_data, file, ensure_ascii=False, indent=4)
+    dump(all_data, file, ensure_ascii=False)

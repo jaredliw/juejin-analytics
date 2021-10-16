@@ -8,7 +8,7 @@ file = MdUtils(file_name='README.md')
 
 file.new_header(1, "掘金数据分析")
 file.write("[![Update data](https://github.com/jaredliw/juejin-analytics/actions/workflows/update-data.yml/badge.svg)]"
-           "(https://github.com/jaredliw/juejin-analytics/actions/workflows/update-data.yml)")
+           "(https://github.com/jaredliw/juejin-analytics/actions/workflows/update-data.yml)", wrap_width=0)
 
 file.new_header(2, "数据分析")
 content = []
@@ -33,7 +33,6 @@ for key in category_id_map.keys():
         table_content.append(cols["digg_count"])
         table_content.append(cols["comment_count"])
         table_content.append(f"{cols['score']:.2f}")
-    print(header + table_content, len(header + table_content))
     file.new_table(len(header), 11, header + table_content)
 
 file.create_md_file()

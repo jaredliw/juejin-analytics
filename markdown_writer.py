@@ -2,7 +2,7 @@
 from mdutils import MdUtils
 
 from analytics import df
-from spider import category_id_map
+from __init__ import category_id_map
 
 file = MdUtils(file_name='README.md')
 

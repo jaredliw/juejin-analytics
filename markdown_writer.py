@@ -1,14 +1,17 @@
 """Write markdown file, present data."""
+from datetime import datetime
+
 from mdutils import MdUtils
 
-from analytics import df
 from __init__ import category_id_map
+from analytics import df
 
 file = MdUtils(file_name='README.md')
 
 file.new_header(1, "掘金数据分析")
 file.write("[![Update data](https://github.com/jaredliw/juejin-analytics/actions/workflows/update-data.yml/badge.svg)]"
            "(https://github.com/jaredliw/juejin-analytics/actions/workflows/update-data.yml)", wrap_width=0)
+file.write(f"上次更新时间： {str(datetime.now())}", wrap_width=0)
 
 file.new_header(2, "数据分析")
 content = []

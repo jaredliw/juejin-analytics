@@ -1,6 +1,7 @@
 from time import time
 
 import cv2
+from execjs import compile
 
 from __init__ import captcha_link, session, raise_error
 
@@ -42,7 +43,7 @@ def download_image(url, filename):
 
 
 def identify_gap_pos(puzzle_filename, piece_filename):
-    """Identify the gap in slider puzzle."""
+    """Identify the gap in slider puzzle, the coordinates or the center of the gap is returned."""
     # Read images
     puzzle = cv2.imread(puzzle_filename)
     piece = cv2.imread(piece_filename)
@@ -51,20 +52,21 @@ def identify_gap_pos(puzzle_filename, piece_filename):
     puzzle_edge = cv2.Canny(puzzle, 100, 200)
     piece_edge = cv2.Canny(piece, 100, 200)
 
-    bg_pic = cv2.cvtColor(puzzle_edge, cv2.COLOR_GRAY2RGB)
-    tp_pic = cv2.cvtColor(piece_edge, cv2.COLOR_GRAY2RGB)
+    # Match
+    res = cv2.matchTemplate(puzzle_edge, piece_edge, cv2.TM_CCOEFF_NORMED)
+    _, _, _, max_loc = cv2.minMaxLoc(res)  # min_val, max_val, min_loc, max_loc (left-upper corner)
 
-    res = cv2.matchTemplate(bg_pic, tp_pic, cv2.TM_CCOEFF_NORMED)
-    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
-    X = max_loc[0]
-    th, tw = tp_pic.shape[:2]
-    tl = max_loc
-    br = (tl[0] + tw, tl[1] + th)
-    cv2.rectangle(puzzle, tl, br, (0, 0, 255), 2)
-    cv2.imshow('out.jpg', puzzle)
-    cv2.waitKey(0)
+    return max_loc[0] + piece_edge.shape[0] // 2, max_loc[1] + piece_edge.shape[1] // 2
 
-raw = get_captcha()
-download_image(raw["question"]["url1"], "puzzle.jpeg")
-download_image(raw["question"]["url2"], "piece.jpeg")
-identify_gap_pos("puzzle.jpeg", "piece.jpeg")
+
+def encrpyt_params(item):
+    with open("captcha.js", "r") as f:
+        text = f.read()
+
+    js_script = compile(text)
+    return js_script.call("encrypt", item)
+
+# raw = get_captcha()
+# download_image(raw["question"]["url1"], "puzzle.jpeg")
+# download_image(raw["question"]["url2"], "piece.jpeg")
+# identify_gap_pos("puzzle.jpeg", "piece.jpeg")

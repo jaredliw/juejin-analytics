@@ -6,7 +6,9 @@ api_tag_list = "https://api.juejin.cn/recommend_api/v1/tag/recommend_tag_list"
 api_recommended_feed = "https://api.juejin.cn/recommend_api/v1/article/recommend_all_feed"
 api_category_feed = "https://api.juejin.cn/recommend_api/v1/article/recommend_cate_feed"
 api_tag_feed = "https://api.juejin.cn/recommend_api/v1/article/recommend_cate_tag_feed"
-captcha_link = "https://verify.snssdk.com/captcha/get"
+get_captcha_link = "https://verify.snssdk.com/captcha/get"
+verify_captcha_link = "https://verify.snssdk.com/captcha/verify""
+login_link = "https://juejin.cn/passport/web/user/login/?account_sdk_source=web"
 category_id_map = bidict({
     "后端": "6809637769959178254",
     "前端": "6809637767543259144",
@@ -157,9 +159,11 @@ tag_id_map = {
 }
 
 
-class JueJinConnectionError(Exception):
+class JuejinError(Exception):
     pass
 
 
 def raise_error(err_code, err_msg, link):
-    raise JueJinConnectionError(f"error {err_code} ({err_msg}) while fetching data from '{link}'")
+    if err_msg == "":
+        err_msg = "<no message>"
+    raise JuejinError(f"error {err_code} ({err_msg}) while fetching data from '{link}'")

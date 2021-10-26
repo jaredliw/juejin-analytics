@@ -7,7 +7,7 @@ api_recommended_feed = "https://api.juejin.cn/recommend_api/v1/article/recommend
 api_category_feed = "https://api.juejin.cn/recommend_api/v1/article/recommend_cate_feed"
 api_tag_feed = "https://api.juejin.cn/recommend_api/v1/article/recommend_cate_tag_feed"
 get_captcha_link = "https://verify.snssdk.com/captcha/get"
-verify_captcha_link = "https://verify.snssdk.com/captcha/verify""
+verify_captcha_link = "https://verify.snssdk.com/captcha/verify"
 login_link = "https://juejin.cn/passport/web/user/login/?account_sdk_source=web"
 category_id_map = bidict({
     "后端": "6809637769959178254",

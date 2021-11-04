@@ -1,11 +1,14 @@
 from bidict import bidict
+from os import environ
 from requests import Session
 
 session = Session()
+cookie = environ.get("JUEJIN_SESSION_ID")
 api_tag_list = "https://api.juejin.cn/recommend_api/v1/tag/recommend_tag_list"
 api_recommended_feed = "https://api.juejin.cn/recommend_api/v1/article/recommend_all_feed"
 api_category_feed = "https://api.juejin.cn/recommend_api/v1/article/recommend_cate_feed"
 api_tag_feed = "https://api.juejin.cn/recommend_api/v1/article/recommend_cate_tag_feed"
+api_translate_manage_pending_list = "https://api.juejin.cn/study_api/v1/translate/pre_query_status"
 get_captcha_link = "https://verify.snssdk.com/captcha/get"
 verify_captcha_link = "https://verify.snssdk.com/captcha/verify"
 login_link = "https://juejin.cn/passport/web/user/login/?account_sdk_source=web"

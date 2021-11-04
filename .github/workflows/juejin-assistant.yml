@@ -2,6 +2,8 @@ name: Juejin Assistant
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '*/15 9-21 * * *'
 
 jobs:
   task:
@@ -11,8 +13,21 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Notify me via Telegram
-        uses: appleboy/telegram-action@v0.1.1
+        run: python notify.py
+        env:
+          JUEJIN_SESSION_ID: ${{ secrets.JUEJIN_SESSION_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          
+      - name: Commit changes
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -m "Send notification [auto]" -a
+          
+      - name: Push changes
+        uses: ad-m/github-push-action@master
         with:
-          to: ${{ secrets.TELEGRAM_TO }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: Hello world!
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+        branch: ${{ github.ref }}

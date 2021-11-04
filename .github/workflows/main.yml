@@ -1,0 +1,17 @@
+name: Juejin Assistant
+
+on:
+  workflow_dispatch:
+
+jobs:
+  task:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Notify me via Telegram
+        uses: appleboy/telegram-action@v0.1.1
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: Hello world!

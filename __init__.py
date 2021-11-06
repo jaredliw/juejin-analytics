@@ -173,6 +173,4 @@ def raise_error(err_code, err_msg, link):
     raise JuejinError(f"error {err_code} ({err_msg}) while fetching data from '{link}'")
 
 def escape_markdown(text):
-    parse = re.sub(r"([_*\[\]()~`>\#\+\-=|\.!])", r"\\\1", text)
-    reparse = re.sub(r"\\\\([_*\[\]()~`>\#\+\-=|\.!])", r"\1", parse)
-    return reparse 
+    return re.sub(r"((([_*]).+?\3[^_*]*)*)([_*])", "\g<1>\\\\\g<4>", text)

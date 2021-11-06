@@ -3,7 +3,7 @@ name: Juejin Assistant
 on:
   workflow_dispatch:
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '*/10 * * * *'
 
 jobs:
   task:

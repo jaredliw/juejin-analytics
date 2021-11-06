@@ -1,6 +1,6 @@
 from os import environ
 
-from __init__ import session
+from __init__ import session, escape_markdown
 
 
 api_send = "https://api.telegram.org/bot{}/sendMessage"
@@ -10,14 +10,20 @@ try:
 except KeyError:
     raise LookupError("TELEGRAM_BOT_TOKEN and/or TELEGRAM_CHAT_ID is not set in the environment variable")
 
+class TelegramError(Exception):
+    pass
+
+
 def send_message(message):
     data = {
         "chat_id": telegram_chat_id,
         "parse_mode": "Markdown",
         "text": message
     }
-    response = session.get(api_send.format(telegram_bot_token), params=data)
-    return response.json()
+    response = session.get(api_send.format(telegram_bot_token), params=data).json()
+    if not response['ok']:
+        raise TelegramError(f"fail to send message via Teiegram ({response['error_code']}): {response['description']}")
+    return response
 
 
 if __name__ == "__main__":
@@ -37,8 +43,9 @@ if __name__ == "__main__":
 
     ids = []
     for item in data:
+        print(sent_items, item)
         if str(item["id"]) not in sent_items:
-            send_message(f"{item['recommend_name']}推荐了一篇文章：[{item['title_src']}]({item['link_url']})（{item['word_count']} 单词），快去[审核](https://juejin.cn/translate/manage)吧！")
+            send_message(f"{escape_markdown(item['recommend_name'])}推荐了一篇文章：[{escape_markdown(item['title_src'])}]({item['link_url']})（{item['word_count']} 单词），快去[审核](https://juejin.cn/translate/manage)吧！")
         ids.append(item["id"])
         sleep(1)
 

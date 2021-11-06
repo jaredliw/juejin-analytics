@@ -1,3 +1,4 @@
+import re
 from bidict import bidict
 from os import environ
 from requests import Session
@@ -170,3 +171,8 @@ def raise_error(err_code, err_msg, link):
     if err_msg == "":
         err_msg = "<no message>"
     raise JuejinError(f"error {err_code} ({err_msg}) while fetching data from '{link}'")
+
+def escape_markdown(text):
+    parse = re.sub(r"([_*\[\]()~`>\#\+\-=|\.!])", r"\\\1", text)
+    reparse = re.sub(r"\\\\([_*\[\]()~`>\#\+\-=|\.!])", r"\1", parse)
+    return reparse 

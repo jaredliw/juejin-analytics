@@ -199,7 +199,7 @@ def login_required(f):
     return _wrapper
 
 
-def response_post_check(return_keys=("data",)):
+def response_post_check(wrapped=None, return_keys=("data",)):
     """Decorator, check error code and extract data from response."""
 
     def _decorator(f):
@@ -215,5 +215,8 @@ def response_post_check(return_keys=("data",)):
             return ret_json
 
         return _wrapper
-
-    return _decorator
+	
+    if wrapped:
+        return _decorator(wrapped)
+    else:
+        return _decorator

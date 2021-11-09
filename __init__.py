@@ -208,11 +208,10 @@ def response_post_check(wrapped=None, return_keys=("data",)):
             if ret_json["err_msg"] != "success":
                 raise_error(ret_json["err_no"], ret_json["err_msg"])
 
-            # must ret_json.keys to a list, raise "RuntimeError: dictionary changed size during iteration" otherwise
-            for key in list(ret_json.keys()):
-                if key not in return_keys:
-                    ret_json.pop(key)
-            return ret_json
+            ret_list = []
+            for key in return_keys:
+                ret_list.append(ret_json[key])
+            return ret_list
 
         return _wrapper
 	

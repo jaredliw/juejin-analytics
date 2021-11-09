@@ -33,7 +33,7 @@ if __name__ == "__main__":
 
     from translate import get_pending_articles
 
-    data = get_pending_articles()
+    [data] = get_pending_articles()
 
     sent_items = []
     try:

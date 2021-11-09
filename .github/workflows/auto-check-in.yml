@@ -27,3 +27,5 @@ jobs:
      
       - name: Daily check-in
         run: python check_in.py
+        env:
+          JUEJIN_SESSION_ID: ${{ secrets.JUEJIN_SESSION_ID }}

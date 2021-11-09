@@ -24,12 +24,11 @@ def _article_list_fetcher(url, additional_json=None, data_container="article_inf
         if additional_json is not None:
             json_data.update(additional_json)
 
-        data = _response_handler(url, json=json_data)
-        if not data["has_more"]:
+        data, has_more, cursor = _response_handler(url, json=json_data)
+        if not has_more:
             break
 
-        cursor = data["cursor"]
-        for record in data["data"]:
+        for record in data:
             yield record[data_container]
 
 

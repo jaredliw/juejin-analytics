@@ -1,18 +1,21 @@
-import re
-from bidict import bidict
 from os import environ
+
+from bidict import bidict
 from requests import Session
 
 session = Session()
 cookie = environ.get("JUEJIN_SESSION_ID")
+
 api_tag_list = "https://api.juejin.cn/recommend_api/v1/tag/recommend_tag_list"
 api_recommended_feed = "https://api.juejin.cn/recommend_api/v1/article/recommend_all_feed"
 api_category_feed = "https://api.juejin.cn/recommend_api/v1/article/recommend_cate_feed"
 api_tag_feed = "https://api.juejin.cn/recommend_api/v1/article/recommend_cate_tag_feed"
 api_translate_manage_pending_list = "https://api.juejin.cn/study_api/v1/translate/pre_query_status"
+api_check_in_status = "https://api.juejin.cn/growth_api/v1/get_today_status"
 get_captcha_link = "https://verify.snssdk.com/captcha/get"
 verify_captcha_link = "https://verify.snssdk.com/captcha/verify"
 login_link = "https://juejin.cn/passport/web/user/login/?account_sdk_source=web"
+
 category_id_map = bidict({
     "后端": "6809637769959178254",
     "前端": "6809637767543259144",
@@ -164,13 +167,43 @@ tag_id_map = {
 
 
 class JuejinError(Exception):
+    """JuejinError is raised when the response from Juejin is not 200 OK."""
     pass
 
 
-def raise_error(err_code, err_msg, link):
+def raise_error(err_code, err_msg=""):
+    """Raise JuejinError with the given error code and error message."""
     if err_msg == "":
         err_msg = "<no message>"
-    raise JuejinError(f"error {err_code} ({err_msg}) while fetching data from '{link}'")
+    raise JuejinError(f"error {err_code}: {err_msg}")
+
 
 def escape_markdown(text):
-    return re.sub(r"((([_*]).+?\3[^_*]*)*)([_*])", "\g<1>\\\\\g<4>", text)
+    """Escape all characters that bring special meanings in markdown."""
+    to_escape = ["_", "*", "[", "]", "(", ")", "~", "`", ">", "#", "+", "-", "=", "|", "{", "}", ".", "!"]
+    for char in to_escape:
+        text = text.replace(char, "\\" + char)
+    return text
+
+
+def login_required(f):
+    """Decorator, check if Juejin session ID is set."""
+
+    def _wrapper(*args, **kwargs):
+        if cookie is None:
+            raise JuejinError("not authenticated")
+        return f(*args, **kwargs)
+
+    return _wrapper
+
+
+def response_post_check(f):
+    """Decorator, check error code and extract data from response."""
+
+    def _wrapper(*args, **kwargs):
+        ret_json = f(*args, **kwargs)
+        if ret_json["err_msg"] != "success":
+            raise_error(ret_json["err_no"], ret_json["err_msg"])
+        return ret_json["data"]
+
+    return _wrapper

@@ -3,15 +3,15 @@ from datetime import datetime
 
 from mdutils import MdUtils
 
-from __init__ import category_id_map
+from __init__ import category_id_map, escape_markdown
 from analytics import df
 
 file = MdUtils(file_name='README.md')
 
 file.new_header(1, "掘金数据分析")
-file.write("[![Update data](https://github.com/jaredliw/juejin-analytics/actions/workflows/update-data.yml/badge.svg)]"
+file.new_line("[![Update data](https://github.com/jaredliw/juejin-analytics/actions/workflows/update-data.yml/badge.svg)]"
            "(https://github.com/jaredliw/juejin-analytics/actions/workflows/update-data.yml)", wrap_width=0)
-file.write(f"上次更新时间： {str(datetime.now())}", wrap_width=0)
+file.new_line(f"上次更新时间： {str(datetime.now())}", wrap_width=0)
 
 file.new_header(2, "数据分析")
 content = []
@@ -30,16 +30,12 @@ for key in category_id_map.keys():
     top10 = top10.sort_values("score", ascending=False)[:10]
     table_content = []
     for _, cols in top10.iterrows():
-        table_content.append(f"[{cols['title']}](https://juejin.cn/post/{cols['article_id']})".replace("|", r"\|"))
+        table_content.append(f"[{escape_markdown(cols['title'])}](https://juejin.cn/post/{cols['article_id']})")
         table_content.append(cols["view_count"])
         table_content.append(cols["collect_count"])
         table_content.append(cols["digg_count"])
         table_content.append(cols["comment_count"])
         table_content.append(f"{cols['score']:.2f}")
-    print(key)
-    print(top10)
-    print(header + table_content)
-    print()
     file.new_table(len(header), 11, header + table_content)
 
 file.create_md_file()

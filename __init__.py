@@ -197,13 +197,21 @@ def login_required(f):
     return _wrapper
 
 
-def response_post_check(f):
+def response_post_check(return_keys=("data",)):
     """Decorator, check error code and extract data from response."""
 
-    def _wrapper(*args, **kwargs):
-        ret_json = f(*args, **kwargs)
-        if ret_json["err_msg"] != "success":
-            raise_error(ret_json["err_no"], ret_json["err_msg"])
-        return ret_json["data"]
+    def _decorator(f):
+        def _wrapper(*args, **kwargs):
+            ret_json = f(*args, **kwargs)
+            if ret_json["err_msg"] != "success":
+                raise_error(ret_json["err_no"], ret_json["err_msg"])
 
-    return _wrapper
+            # must ret_json.keys to a list, raise "RuntimeError: dictionary changed size during iteration" otherwise
+            for key in list(ret_json.keys()):
+                if key not in return_keys:
+                    ret_json.pop(key)
+            return ret_json
+
+        return _wrapper
+
+    return _decorator

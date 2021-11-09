@@ -13,9 +13,7 @@ def get_check_in_status():
 @response_post_check
 def check_in():
     """Check in."""
-    return session.post("https://api.juejin.cn/growth_api/v1/check_in",
-                        headers={"cookie": f"sessionid={cookie};"},
-                        json={}).json()
+    return session.post(check_in_link, headers={"cookie": f"sessionid={cookie};"}, json={}).json()
 
 
 if __name__ == "__main__" and not get_check_in_status():

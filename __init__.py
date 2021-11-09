@@ -15,6 +15,7 @@ api_translate_manage_pending_list = "https://api.juejin.cn/study_api/v1/translat
 api_check_in_status = "https://api.juejin.cn/growth_api/v1/get_today_status"
 get_captcha_link = "https://verify.snssdk.com/captcha/get"
 verify_captcha_link = "https://verify.snssdk.com/captcha/verify"
+chedk_in_link = "https://api.juejin.cn/growth_api/v1/check_in"
 login_link = "https://juejin.cn/passport/web/user/login/?account_sdk_source=web"
 
 category_id_map = bidict({

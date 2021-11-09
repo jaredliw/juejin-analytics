@@ -17,7 +17,7 @@ class TelegramError(Exception):
 def send_message(message):
     data = {
         "chat_id": telegram_chat_id,
-        "parse_mode": "Markdown",
+        "parse_mode": "MarkdownV2",
         "text": message
     }
     response = session.get(api_send.format(telegram_bot_token), params=data).json()

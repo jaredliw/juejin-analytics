@@ -1,3 +1,4 @@
+"""Send messages via Telegram bot."""
 from os import environ
 
 from __init__ import session, escape_markdown

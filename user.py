@@ -1,3 +1,4 @@
+"""Login Juejin."""
 from execjs import compile
 
 from __init__ import session, login_link, raise_error

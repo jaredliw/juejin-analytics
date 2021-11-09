@@ -1,3 +1,4 @@
+"""Constants, links and functions that are used across multiple files."""
 from os import environ
 
 from bidict import bidict

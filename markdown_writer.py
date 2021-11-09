@@ -1,4 +1,4 @@
-"""Write markdown file, present data."""
+"""Data presentation, rite markdown file."""
 from datetime import datetime
 
 from mdutils import MdUtils

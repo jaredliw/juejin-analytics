@@ -1,3 +1,4 @@
+"""Data analysis, create pandas dataframe adn clean data."""
 from datetime import datetime
 from json import load
 
@@ -17,7 +18,7 @@ del data
 df = df[~df.duplicated(subset="article_id")]
 df["mtime"] = pd.to_datetime(df['mtime'], unit='s')
 df["time_diff"] = (datetime.now() - df["mtime"]).dt.days
-# Custom way of couting score
+# Custom way of counting score
 df["score"] = (df["view_count"] * 0.1 +
                df["comment_count"] * 0.2 +
                df["digg_count"] * 0.3 +

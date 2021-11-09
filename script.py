@@ -1,4 +1,4 @@
-"""Data crawling and write data to JSON file."""
+"""A handy script that crawls data writes data to JSON file."""
 from json import dump
 from threading import Thread
 

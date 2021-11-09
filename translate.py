@@ -1,3 +1,4 @@
+"""All about Juejin translation project."""
 from __init__ import api_translate_manage_pending_list, cookie, session, login_required, response_post_check
 
 

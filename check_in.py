@@ -17,4 +17,4 @@ def check_in():
 
 
 if __name__ == "__main__" and not get_check_in_status()[0]:
-    print(check_in())
+    check_in()

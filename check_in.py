@@ -1,5 +1,5 @@
 """Daily check in."""
-from __init__ import api_check_in_status, session, cookie, login_required, response_post_check
+from __init__ import api_check_in_status, session, cookie, login_required, response_post_check, check_in_link
 
 
 @login_required
@@ -16,5 +16,5 @@ def check_in():
     return session.post(check_in_link, headers={"cookie": f"sessionid={cookie};"}, json={}).json()
 
 
-if __name__ == "__main__" and not get_check_in_status():
-    check_in()
+if __name__ == "__main__" and not get_check_in_status()[0]:
+    print(check_in())

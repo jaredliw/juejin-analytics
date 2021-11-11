@@ -208,6 +208,8 @@ def response_post_check(wrapped=None, return_keys=("data",)):
             if ret_json["err_msg"] != "success":
                 raise_error(ret_json["err_no"], ret_json["err_msg"])
 
+            if len(return_keys) == 1:
+                return ret_json[return_keys[0]]
             ret_list = []
             for key in return_keys:
                 ret_list.append(ret_json[key])

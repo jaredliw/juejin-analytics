@@ -10,6 +10,7 @@ try:
 except KeyError:
     raise LookupError("TELEGRAM_BOT_TOKEN and/or TELEGRAM_CHAT_ID is not set in the environment variable")
 
+
 class TelegramError(Exception):
     """TelegramError is raised when the response from Telegram API is not 200 OK."""
     pass

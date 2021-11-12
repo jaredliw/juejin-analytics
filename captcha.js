@@ -6096,5 +6096,5 @@ enc.call(r.exports, r, r.exports);
 window.encrypt = r.exports.encrypt;
 
 function encrypt(item) {
-	return window.encrypt.apply(null, [item, "Base64"]);
+    return window.encrypt.apply(null, [item, "Base64"]);
 };

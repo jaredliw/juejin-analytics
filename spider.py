@@ -44,7 +44,7 @@ def fetch_by_category(category, tag=None):
         raise ValueError(error_str.format("category", category_id_map.keys(), category))
     if category is not None and category not in category_id_map:
         raise ValueError(error_str.format("tag", list(tag_id_map[category].keys()) + [None], tag))
-    
+
     if tag is None:
         return _article_list_fetcher(api_category_feed, {
             "cate_id": category_id_map[category]

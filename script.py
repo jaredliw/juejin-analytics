@@ -1,6 +1,6 @@
 """A handy script that crawls data writes data to JSON file."""
 from json import dump
-from threading import Thread, current_thread
+from threading import Thread
 
 from spider import category_id_map, fetch_by_category
 

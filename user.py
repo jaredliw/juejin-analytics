@@ -7,7 +7,6 @@ from anti_captcha import anti_captcha
 if __name__ != "__main__":
     raise NotImplementedError("this script is under construction, do not use")
 
-
 with open("login.js", "r") as f:
     text = f.read()
 login_js = compile(text)

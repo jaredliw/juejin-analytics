@@ -1,4 +1,4 @@
-"""Data analysis, create pandas dataframe adn clean data."""
+"""Data analysis, create pandas dataframe and clean data."""
 from datetime import datetime
 from json import load
 
@@ -9,6 +9,8 @@ with open("juejin_articles.json", "r", encoding="utf-8") as file:
 
 data = []
 for key in json_data.keys():
+    if json_data[key] is None:  # debug use
+        print(key, json_data)  # debug use
     data += json_data[key]
 del json_data
 

@@ -32,17 +32,20 @@ def send_message(message):
 if __name__ == "__main__":
     from time import sleep
 
-    from translate import get_pending_articles
+    from __init__ import config_filename
+    from config_parser import ConfigParser
+    from translate import get_pending_recommendations
 
-    data = get_pending_articles()
+    data = get_pending_recommendations()
 
     sent_items = []
+    # Record the items that have been sent to prevent repeating messages
+    parser = ConfigParser()
+    parser.read(config_filename)
     try:
-        # A custom file is record the items that have been sent to prevent repeating messages
-        with open("sent.txt", "r") as file:
-            sent_items = file.read().split("\n")
-    except FileNotFoundError:
-        pass
+        sent_items = parser["translate"]["sent"]
+    except KeyError:
+        sent_items = []
 
     ids = []
     for item in data:
@@ -52,7 +55,6 @@ if __name__ == "__main__":
                          f"快去[审核](https://juejin.cn/translate/manage)吧！")
         ids.append(item["id"])
         sleep(1)
-
-    with open("sent.txt", "w") as file:
-        for id_ in ids:
-            file.write(str(id_) + "\n")
+    
+    parser["translate"] = {"sent": ids}
+    parser.write(config_filename)

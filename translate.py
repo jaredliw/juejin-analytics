@@ -4,7 +4,7 @@ from __init__ import api_translate_manage_pending_list, cookie, session, login_r
 
 @login_required
 @response_post_check
-def get_pending_articles():
+def get_pending_recommendations():
     """Get recommended articles under review of admin. Admin privilege needed."""
     data = {
         "page_no": 1,

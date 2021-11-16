@@ -12,6 +12,4 @@ def get_pending_articles():
         "status": 1,
         "key": ""
     }
-    return session.post(api_translate_manage_pending_list,
-                        headers={"Content-Type": "application/json", "cookie": f"sessionid={cookie};"},
-                        json=data).json()
+    return session.post(api_translate_manage_pending_list, cookies={"sessionid": cookie}, json=data).json()

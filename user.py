@@ -6,7 +6,8 @@ from __init__ import session, login_required, response_post_check, api_profile_i
 @response_post_check
 def get_profile_id():
     """Get the profile ID of current logged in user."""
-    return session.get(api_profile_id, headers={"cookie": f"sessionid={cookie};"}).json()
+    return session.get(api_profile_id, cookies={"sessionid": cookie}).json()
+
 
 @login_required
 @response_post_check
@@ -15,7 +16,7 @@ def get_profile(profile_id=None):
     if profile_id is None:
         profile_id = get_profile_id()["profile_id"]
 
-    return session.get(api_user, headers={"cookie": f"sessionid={cookie};"}).json()
+    return session.get(api_user, cookies={"sessionid": cookie}).json()
 
 
 if __name__ == "__main__":

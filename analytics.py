@@ -4,7 +4,10 @@ from json import load
 
 import pandas as pd
 
-with open("juejin_articles.json", "r", encoding="utf-8") as file:
+from __init__ import data_filename
+
+
+with open(data_filename, "r", encoding="utf-8") as file:
     json_data = load(file)
 
 data = []

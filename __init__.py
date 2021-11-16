@@ -6,6 +6,8 @@ from requests import Session
 
 session = Session()
 cookie = environ.get("JUEJIN_SESSION_ID")
+data_filename = "juejin_articles.json"
+config_filename = "juejin.ini"
 
 api_tag_list = "https://api.juejin.cn/recommend_api/v1/tag/recommend_tag_list"
 api_recommended_feed = "https://api.juejin.cn/recommend_api/v1/article/recommend_all_feed"

@@ -2,6 +2,7 @@
 from json import dump
 from threading import Thread
 
+from __init__ import data_filename
 from spider import category_id_map, fetch_by_category
 
 all_data = {}
@@ -52,5 +53,5 @@ for key in all_data.keys():
 for thread in thread_pool:
     thread.join()
 
-with open("juejin_articles.json", "w", encoding='utf8') as file:
+with open(data_filename, "w", encoding='utf-8') as file:
     dump(all_data, file, ensure_ascii=False)

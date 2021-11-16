@@ -31,6 +31,11 @@ jobs:
           JUEJIN_SESSION_ID: ${{ secrets.JUEJIN_SESSION_ID }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          
+      - name: Update config file
+        run: python config_parser.py
+        env:
+          JUEJIN_SESSION_ID: ${{ secrets.JUEJIN_SESSION_ID }}
 
       - name: Commit changes
         run: |

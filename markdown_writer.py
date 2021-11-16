@@ -45,15 +45,15 @@ parser.read(config_filename)
 if "user" in parser:
     user_data = parser["user"]
     file.new_header(2, "用户")
-    file.new_line(f"用户名：" + file.new_inline_link(escape_markdown(user_data["username"]), f"https://juejin.cn/user/{escape_markdown(user_data['user_id'])}"))
-    file.new_line("等级：" + escape_markdown(user_data["level"]))
-    file.new_line("掘力值：" + escape_markdown(user_data["power"]))
+    file.new_line(f"用户名：" + file.new_inline_link(f"https://juejin.cn/user/{escape_markdown(user_data['user_id'])}", escape_markdown(user_data["username"])) + "\n", wrap_width=0)
+    file.new_line("等级：" + escape_markdown(user_data["level"]) + "\n", wrap_width=0)
+    file.new_line("掘力值：" + escape_markdown(user_data["power"]) + "\n", wrap_width=0)
     
     if "check_in" in parser:
         check_in_data = parser["check_in"]
         file.new_header(3, "签到信息")
-        file.new_line(f"**今日{'已' if check_in_data['status'] == 'True' else '仍未'}签到。**")
-        file.new_line("累计签到天数：" + escape_markdown(check_in_data["day"]))
-        file.new_line("当前矿石数：" + escape_markdown(check_in_data["point"]))
+        file.new_line(f"**今日{'已' if check_in_data['status'] == 'True' else '仍未'}签到。\n**", wrap_width=0)
+        file.new_line("累计签到天数：" + escape_markdown(check_in_data["day"]) + "\n", wrap_width=0)
+        file.new_line("当前矿石数：" + escape_markdown(check_in_data["point"]) + "'n", wrap_width=0)
 
 file.create_md_file()

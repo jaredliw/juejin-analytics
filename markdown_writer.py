@@ -52,8 +52,8 @@ if "user" in parser:
     if "check_in" in parser:
         check_in_data = parser["check_in"]
         file.new_header(3, "签到信息")
-        file.new_line(f"**今日{'已' if check_in_data['status'] == 'True' else '仍未'}签到。\n**", wrap_width=0)
+        file.new_line(f"**今日{'已' if check_in_data['status'] == 'True' else '仍未'}签到。**\n", wrap_width=0)
         file.new_line("累计签到天数：" + escape_markdown(check_in_data["day"]) + "\n", wrap_width=0)
-        file.new_line("当前矿石数：" + escape_markdown(check_in_data["point"]) + "'n", wrap_width=0)
+        file.new_line("当前矿石数：" + escape_markdown(check_in_data["point"]) + "\n", wrap_width=0)
 
 file.create_md_file()

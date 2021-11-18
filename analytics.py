@@ -6,7 +6,6 @@ import pandas as pd
 
 from __init__ import data_filename
 
-
 with open(data_filename, "r", encoding="utf-8") as file:
     json_data = load(file)
 

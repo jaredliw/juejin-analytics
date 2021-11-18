@@ -9,13 +9,13 @@ from execjs import compile
 
 from __init__ import get_captcha_link, session, raise_error, verify_captcha_link
 
-if __name__ != "__main__":
-    raise NotImplementedError("this script is under construction, do not use")
-
 
 @cache
 def load_captcha_js():
     """Load captcha.js and return a execjs context. Cached."""
+    if __name__ != "__main__":
+        raise NotImplementedError("under construction")
+
     with open("captcha.js", "r") as f:
         text = f.read()
     return compile(text)
@@ -23,6 +23,9 @@ def load_captcha_js():
 
 def get_captcha():
     """Get captcha information from source."""
+    if __name__ != "__main__":
+        raise NotImplementedError("under construction")
+
     data = {
         "lang": "zh",
         "app_name": "juejin_web",
@@ -117,9 +120,6 @@ def anti_captcha():
     response = get_captcha()
     download_image(response["question"]["url1"], puzzle_filename)
     download_image(response["question"]["url2"], piece_filename)
-    # download_image("https://p3-catpcha.byteimg.com/tos-cn-i-188rlo5p4y/bb6a7d7224bc4eb398af3e9f01e665f4~tplv-188rlo5p4y-2.jpeg", puzzle_filename)
-    # download_image("https://p3-catpcha.byteimg.com/tos-cn-i-188rlo5p4y/1b77e2f4c8084cb485c1b572ff24c578~tplv-188rlo5p4y-1.png", piece_filename)
-    #######################################################################################
     gap_x, _, width, _ = identify_gap_pos(puzzle_filename, piece_filename)
     print("width", width)
     print("before", gap_x)
@@ -161,7 +161,3 @@ def anti_captcha():
         })
     }
     return session.post(verify_captcha_link, params=data, json=data1).json()
-
-
-# pprint(forge_mouse_motion(200))
-print(anti_captcha())

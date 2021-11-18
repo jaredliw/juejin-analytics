@@ -1,11 +1,8 @@
 import configparser
 
-from os import path
-
 from __init__ import config_filename
 from check_in import get_check_in_status, get_check_in_days, get_total_points
 from users import get_profile
-from translate import get_pending_recommendations
 
 
 class ConfigParser(configparser.ConfigParser):

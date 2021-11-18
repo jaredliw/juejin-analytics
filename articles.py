@@ -62,3 +62,53 @@ def fetch_articles_by_user_id(user_id):
         "sort_type": 2,
         "user_id": user_id
     })
+
+
+# Sync articles to local
+if __name__ == "__main__":
+    import os
+    import subprocess
+    from functools import partial
+    from re import sub
+    from unicodedata import normalize
+
+    from bs4 import BeautifulSoup
+
+    from users import get_profile_id
+
+    # Put this line before import execjs
+    # execjs's bug, error when using unicode (default to gbk)
+    subprocess.Popen = partial(subprocess.Popen, encoding="utf-8")  # monkey patching
+    from execjs import compile
+
+
+    def slugify(value, allow_unicode=False):
+        """
+        Modified from https://github.com/django/django/blob/master/django/utils/text.py.
+        Convert to ASCII if 'allow_unicode' is False. Convert spaces or repeated dashes to single dashes. Remove
+        characters that aren't alphanumerics, underscores, or hyphens. Convert to lowercase. Also strip leading and
+        trailing whitespace, dashes, and underscores.
+        """
+        value = str(value)
+        if allow_unicode:
+            value = normalize('NFKC', value)
+        else:
+            value = normalize('NFKD', value).encode('ascii', 'ignore').decode('ascii')
+        value = sub(r'[^\w\s-]', '-', value.lower())
+        return sub(r'[-\s]+', '-', value).strip('-_')
+
+
+    directory = "articles/"
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+    my_articles = ((item["title"], item["article_id"])
+                   for item in fetch_articles_by_user_id(get_profile_id()["profile_id"]))
+    for article_title, article_id in my_articles:
+        js_script = BeautifulSoup(session.get(f"https://juejin.cn/post/{article_id}")
+                                  .content, "lxml").find_all("script")[-10].string
+        compiled_script = compile("window = global;" + js_script)
+        md_content = compiled_script.eval("window.__NUXT__.state.view.column.entry.article_info.mark_content")
+
+        with open(directory + slugify(article_title, allow_unicode=True) + ".md", "w", encoding="utf-8") as file:
+            file.write(md_content)

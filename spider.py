@@ -1,6 +1,6 @@
 """Call Juejin API and handle requests."""
 from __init__ import session, category_id_map, tag_id_map, api_category_feed, api_recommended_feed, api_tag_feed, \
-    response_post_check
+    response_post_check, api_user_articles
 
 max_retries = 5
 
@@ -54,3 +54,11 @@ def fetch_by_category(category, tag=None):
             "cate_id": category_id_map[category],
             "tag_id": tag_id_map[category][tag]
         })
+
+
+def fetch_user_articles(user_id):
+    """Get all articles written by the user given."""
+    return _article_list_fetcher(api_user_articles, {
+        "sort_type": 2,
+        "user_id": user_id
+    })

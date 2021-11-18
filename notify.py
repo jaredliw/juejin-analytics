@@ -30,6 +30,7 @@ def send_message(message):
 
 
 if __name__ == "__main__":
+    from json import loads
     from time import sleep
 
     from __init__ import config_filename
@@ -43,13 +44,13 @@ if __name__ == "__main__":
     parser = ConfigParser()
     parser.read(config_filename)
     try:
-        sent_items = parser["translate"]["sent"]
+        sent_items = loads(parser["translate"]["sent"])
     except KeyError:
         sent_items = []
 
     ids = []
     for item in data:
-        if str(item["id"]) not in sent_items:
+        if item["id"] not in sent_items:
             send_message(f"{escape_markdown(item['recommend_name'])}推荐了一篇文章："
                          f"[{escape_markdown(item['title_src'])}]({item['link_url']})（{item['word_count']} 单词），"
                          f"快去[审核](https://juejin.cn/translate/manage)吧！")

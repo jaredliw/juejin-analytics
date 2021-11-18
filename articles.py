@@ -67,19 +67,22 @@ def fetch_articles_by_user_id(user_id):
 # Sync articles to local
 if __name__ == "__main__":
     import os
-    import subprocess
-    from functools import partial
     from re import sub
+    from json import loads
+    from subprocess import Popen
+    from functools import partial
     from unicodedata import normalize
 
+    import execjs
     from bs4 import BeautifulSoup
 
-    from users import get_profile_id
+    from __init__ import config_filename
+    from users import get_profile
+    from config_parser import ConfigParser
 
-    # Put this line before import execjs
-    # execjs's bug, error when using unicode (default to gbk)
-    subprocess.Popen = partial(subprocess.Popen, encoding="utf-8")  # monkey patching
-    from execjs import compile
+    # Encoding error, execjs' bug
+    # Monkey patching
+    execjs._external_runtime.Popen = partial(Popen, encoding="utf-8")  # noqa
 
 
     def slugify(value, allow_unicode=False):
@@ -102,13 +105,28 @@ if __name__ == "__main__":
     if not os.path.exists(directory):
         os.makedirs(directory)
 
+    parser = ConfigParser()
+    parser.read(config_filename)
+    try:
+        synced = loads(parser["post"]["article_ids"])
+    except KeyError:
+        synced = []
+
     my_articles = ((item["title"], item["article_id"])
-                   for item in fetch_articles_by_user_id(get_profile_id()["profile_id"]))
+                   for item in fetch_articles_by_user_id(get_profile()["user_id"]))
     for article_title, article_id in my_articles:
+        if int(article_id) in synced:
+            continue
+
         js_script = BeautifulSoup(session.get(f"https://juejin.cn/post/{article_id}")
                                   .content, "lxml").find_all("script")[-10].string
-        compiled_script = compile("window = global;" + js_script)
+        compiled_script = execjs.compile("window = global;" + js_script)
         md_content = compiled_script.eval("window.__NUXT__.state.view.column.entry.article_info.mark_content")
 
         with open(directory + slugify(article_title, allow_unicode=True) + ".md", "w", encoding="utf-8") as file:
             file.write(md_content)
+
+        synced.append(int(article_id))
+
+    parser["post"] = {"article_ids": str(synced)}
+    parser.write(config_filename)

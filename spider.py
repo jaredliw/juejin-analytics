@@ -23,6 +23,7 @@ def _handler(category, max_retries=5):
             counter += 1
 
 
+# noinspection PyMissingOrEmptyDocstring
 class _CustomThread(Thread):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

@@ -1,5 +1,6 @@
 """Daily check in."""
-from __init__ import api_check_in_status, session, cookie, login_required, response_post_check, check_in_link, api_check_in_day_count, api_get_total_point
+from __init__ import api_check_in_status, session, cookie, login_required, response_post_check, check_in_link, \
+    api_check_in_day_count, api_get_total_point
 
 
 @login_required
@@ -19,7 +20,7 @@ def get_check_in_days():
 @login_required
 @response_post_check
 def get_total_points():
-    """Get the number of point i.e. kuangshi owned."""
+    """Get the number of point i.e. KuangShi owned."""
     return session.get(api_get_total_point, cookies={"sessionid": cookie}).json()
 
     

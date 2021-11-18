@@ -5,6 +5,7 @@ from check_in import get_check_in_status, get_check_in_days, get_total_points
 from users import get_profile
 
 
+# noinspection PyMissingOrEmptyDocstring
 class ConfigParser(configparser.ConfigParser):
     def read(self, filenames, encoding="utf-8"):
         super().read(filenames, encoding)

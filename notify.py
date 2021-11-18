@@ -18,14 +18,14 @@ class TelegramError(Exception):
 
 def send_message(message):
     """Send a message via Telegram. Message is written in markdown format."""
-    data = {
+    params = {
         "chat_id": telegram_chat_id,
         "parse_mode": "MarkdownV2",  # do not use markdown (version 1)!
         "text": message
     }
-    response = session.get(api_send.format(telegram_bot_token), params=data).json()
+    response = session.get(api_send.format(telegram_bot_token), params=params).json()
     if not response['ok']:
-        raise TelegramError(f"fail to send message via Teiegram ({response['error_code']}): {response['description']}")
+        raise TelegramError(f"fail to send message via Telegram ({response['error_code']}): {response['description']}")
     return response
 
 
@@ -56,5 +56,5 @@ if __name__ == "__main__":
         ids.append(item["id"])
         sleep(1)
     
-    parser["translate"] = {"sent": ids}
+    parser["translate"] = {"sent": str(ids)}
     parser.write(config_filename)

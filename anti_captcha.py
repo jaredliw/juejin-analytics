@@ -96,7 +96,9 @@ def forge_mouse_motion(end_x, start_x=randint(60, 65), sample_size=randint(25, 3
     avg_speed = (end_x - start_x) / duration
     gradient = avg_speed / (-0.5 * duration)
     y_intercept = -(gradient * duration)
-    speed_func = lambda t: gradient * t + y_intercept
+
+    def speed_func(t):
+        return gradient * t + y_intercept
 
     for _ in range(sample_size):
         cur_time = last_time + randint(avg_time_interval - 10, avg_time_interval + 10)

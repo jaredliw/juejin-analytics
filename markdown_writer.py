@@ -1,4 +1,5 @@
 """Data presentation, rite markdown file."""
+from json import loads
 from datetime import datetime
 
 from mdutils import MdUtils
@@ -56,5 +57,18 @@ if "user" in parser:
         file.new_line(f"**今日{'已' if check_in_data['status'] == 'True' else '仍未'}签到。**\n", wrap_width=0)
         file.new_line("累计签到天数：" + escape_markdown(check_in_data["day"]) + "\n", wrap_width=0)
         file.new_line("当前矿石数：" + escape_markdown(check_in_data["point"]) + "\n", wrap_width=0)
+
+    if "post" in parser and "articles" in parser["post"]:
+        articles = loads(parser["post"]["articles"])["data"]
+        print(articles)
+        file.new_header(3, "我的文章")
+
+        table_content = []
+        for article in articles:
+            article = loads(article)
+            table_content.append(escape_markdown(article["title"]))
+            table_content.append(file.new_inline_link(f"https://github.com/jaredliw/juejin-analytics/blob/master/articles/{article['filename']}", "Github")
+                                                      + " \| " + file.new_inline_link(f"https://juejin.cn/post/{article['id']}", "掘金"))
+        file.new_table(2, len(table_content) // 2 + 1, ["标题", "链接"] + table_content)
 
 file.create_md_file()

@@ -68,7 +68,7 @@ def fetch_articles_by_user_id(user_id):
 if __name__ == "__main__":
     import os
     from re import sub
-    from json import loads
+    from json import dumps, loads
     from subprocess import Popen
     from functools import partial
     from unicodedata import normalize
@@ -123,10 +123,15 @@ if __name__ == "__main__":
         compiled_script = execjs.compile("window = global;" + js_script)
         md_content = compiled_script.eval("window.__NUXT__.state.view.column.entry.article_info.mark_content")
 
-        with open(directory + slugify(article_title, allow_unicode=True) + ".md", "w", encoding="utf-8") as file:
+        filename = slugify(article_title, allow_unicode=True) + ".md"
+        with open(directory + filename, "w", encoding="utf-8") as file:
             file.write(md_content)
 
-        synced.append(int(article_id))
+        synced.append(dumps({
+            "id":int(article_id),
+            "title": article_title,
+            "filename": filename
+        }))
 
-    parser["post"] = {"article_ids": str(synced)}
+    parser["post"] = {"articles": dumps({"data": synced})}
     parser.write(config_filename)

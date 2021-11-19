@@ -36,6 +36,11 @@ jobs:
         run: python config_parser.py
         env:
           JUEJIN_SESSION_ID: ${{ secrets.JUEJIN_SESSION_ID }}
+          
+      - name: Sync articles
+        run: python articles.py
+        env:
+          JUEJIN_SESSION_ID: ${{ secrets.JUEJIN_SESSION_ID }}
 
       - name: Commit changes
         run: |

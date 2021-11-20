@@ -1,6 +1,6 @@
 """Daily check in."""
 from __init__ import api_check_in_status, session, cookie, login_required, response_post_check, check_in_link, \
-    api_check_in_day_count, api_get_total_point, api_lottery_config
+    api_check_in_day_count, api_get_total_point, api_lottery_config, api_draw_lottery
 
 
 @login_required
@@ -32,16 +32,17 @@ def check_in():
 
 
 @login_required
+@response_post_check
 def get_lottery_config():
     """Get lottery config, includes: free lottery count, prizes and point cost."""
     return session.get(api_lottery_config, cookies={"sessionid": cookie}).json()
 
 
 @login_required
+@response_post_check
 def draw_lottery():
     """Draw a lottery."""
-    # todo: possibly signature is required
-    return session.get(api_draw_lottery, cookies={"sessionid": cookie}).json()
+    return session.post(api_draw_lottery, cookies={"sessionid": cookie}).text
 
 
 if __name__ == "__main__":
@@ -54,6 +55,7 @@ if __name__ == "__main__":
     lottery_config = get_lottery_config()
     for _ in range(lottery_config["free_count"]):
         result = draw_lottery()
+        print(result)
         ################################
         # Some info about lottery_type #
         ################################

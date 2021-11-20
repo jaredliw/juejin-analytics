@@ -108,30 +108,33 @@ if __name__ == "__main__":
     parser = ConfigParser()
     parser.read(config_filename)
     try:
-        synced = loads(parser["post"]["article_ids"])
-    except KeyError:
+        synced = [loads(item) for item in loads(parser["post"]["articles"])["data"]]
+    except KeyError as e:
         synced = []
+        raise e
 
-    my_articles = ((item["title"], item["article_id"])
+    new_synced = []
+    my_articles = ((item["article_id"], item["title"])
                    for item in fetch_articles_by_user_id(get_profile()["user_id"]))
-    for article_title, article_id in my_articles:
-        if int(article_id) in synced:
-            continue
-
-        js_script = BeautifulSoup(session.get(f"https://juejin.cn/post/{article_id}")
-                                  .content, "lxml").find_all("script")[-10].string
-        compiled_script = execjs.compile("window = global;" + js_script)
-        md_content = compiled_script.eval("window.__NUXT__.state.view.column.entry.article_info.mark_content")
-
+    for article_id, article_title in my_articles:
         filename = slugify(article_title, allow_unicode=True) + ".md"
-        with open(directory + filename, "w", encoding="utf-8") as file:
-            file.write(md_content)
+        for item in synced:
+            if int(article_id) == item["id"]:
+                break
+        else:
+            js_script = BeautifulSoup(session.get(f"https://juejin.cn/post/{article_id}")
+                                      .content, "lxml").find_all("script")[-10].string
+            compiled_script = execjs.compile("window = global;" + js_script)
+            md_content = compiled_script.eval("window.__NUXT__.state.view.column.entry.article_info.mark_content")
 
-        synced.append(dumps({
+            with open(directory + filename, "w", encoding="utf-8") as file:
+                file.write(md_content)
+
+        new_synced.append(dumps({
             "id":int(article_id),
             "title": article_title,
             "filename": filename
         }))
 
-    parser["post"] = {"articles": dumps({"data": synced})}
+    parser["post"] = {"articles": dumps({"data": new_synced})}
     parser.write(config_filename)

@@ -38,7 +38,7 @@ jobs:
           JUEJIN_SESSION_ID: ${{ secrets.JUEJIN_SESSION_ID }}
           
       - name: Sync articles
-        run: python articles.py
+        run: echo skipped #python articles.py
         env:
           JUEJIN_SESSION_ID: ${{ secrets.JUEJIN_SESSION_ID }}
 

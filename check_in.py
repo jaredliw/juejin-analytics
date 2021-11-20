@@ -63,4 +63,4 @@ if __name__ == "__main__":
         # 4: Big prize!                #
         ################################
         if result["lottery_type"] >= 3:
-            send_message(f"恭喜你抽中了一个{escape_markdown(result["lottery_name"])}！")
+            send_message(f"恭喜你抽中了一个{escape_markdown(result['lottery_name'])}！")

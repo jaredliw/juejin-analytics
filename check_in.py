@@ -42,7 +42,7 @@ def get_lottery_config():
 @response_post_check
 def draw_lottery():
     """Draw a lottery."""
-    return session.post(api_draw_lottery, cookies={"sessionid": cookie}).text
+    return session.post(api_draw_lottery, cookies={"sessionid": cookie}).json()
 
 
 if __name__ == "__main__":

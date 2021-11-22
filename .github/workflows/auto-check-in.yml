@@ -29,3 +29,5 @@ jobs:
         run: python check_in.py
         env:
           JUEJIN_SESSION_ID: ${{ secrets.JUEJIN_SESSION_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}

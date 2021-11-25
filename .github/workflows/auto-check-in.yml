@@ -3,7 +3,7 @@ name: Auto Check-in
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 1 * * *'
+    - cron: '0 16 * * *'  # timezone: UTC
 
 jobs:
   task:

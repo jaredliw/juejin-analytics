@@ -17,15 +17,18 @@ api_translate_manage_pending_list = "https://api.juejin.cn/study_api/v1/translat
 api_check_in_status = "https://api.juejin.cn/growth_api/v1/get_today_status"
 api_check_in_day_count = "https://api.juejin.cn/growth_api/v1/get_counts"
 api_lottery_config = "https://api.juejin.cn/growth_api/v1/lottery_config/get"
+api_lottery_history = "https://api.juejin.cn/growth_api/v1/lottery_history/global_small"
 api_get_total_point = "https://api.juejin.cn/growth_api/v1/get_cur_point"
 api_draw_lottery = "https://api.juejin.cn/growth_api/v1/lottery/draw"
 api_profile_id = "https://api.juejin.cn/user_api/v1/user/profile_id"
 api_user = "https://api.juejin.cn/user_api/v1/user/get"
 api_user_articles = "https://api.juejin.cn/content_api/v1/article/query_list"
+api_get_luck = "https://api.juejin.cn/growth_api/v1/lottery_lucky/my_lucky"
 get_captcha_link = "https://verify.snssdk.com/captcha/get"
 verify_captcha_link = "https://verify.snssdk.com/captcha/verify"
 check_in_link = "https://api.juejin.cn/growth_api/v1/check_in"
 login_link = "https://juejin.cn/passport/web/user/login/?account_sdk_source=web"
+attract_luck_link = "https://api.juejin.cn/growth_api/v1/lottery_lucky/dip_lucky"
 
 category_id_map = bidict({
     "后端": "6809637769959178254",

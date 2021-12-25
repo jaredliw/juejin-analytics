@@ -56,6 +56,6 @@ if __name__ == "__main__":
                          f"快去[审核](https://juejin.cn/translate/manage)吧！")
         ids.append(item["id"])
         sleep(1)
-    
+
     parser["translate"] = {"sent": str(ids)}
     parser.write(config_filename)

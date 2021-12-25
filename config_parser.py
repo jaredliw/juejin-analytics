@@ -9,7 +9,7 @@ from users import get_profile
 class ConfigParser(configparser.ConfigParser):
     def read(self, filenames, encoding="utf-8"):
         super().read(filenames, encoding)
-    
+
     def write(self, filename, encoding="utf-8"):
         with open(filename, "w", encoding=encoding) as file:
             super().write(file)

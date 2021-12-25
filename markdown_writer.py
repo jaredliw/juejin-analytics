@@ -1,4 +1,4 @@
-"""Data presentation, rite markdown file."""
+"""Data presentation, write markdown file."""
 from json import loads
 from datetime import datetime
 
@@ -15,6 +15,17 @@ file.new_line(
     "[![Update data](https://github.com/jaredliw/juejin-analytics/actions/workflows/update-data.yml/badge.svg)]"
     "(https://github.com/jaredliw/juejin-analytics/actions/workflows/update-data.yml)", wrap_width=0)
 file.new_line(f"上次更新时间： {str(datetime.now())}", wrap_width=0)
+
+file.new_header(2, "待办事项 & 功能")
+file.write("""
+- [x] 文章爬取
+- [ ] TF-ITF 文章词频分析、可视化大图等等
+- [ ] 自动化用户登录
+- [x] 获取用户信息（用户名、等级、掘力值、矿石数量等）
+- [x] 自动化每日签到 + 抽奖 （沾喜气功能正在开发中……）
+- [x] 自动同步我的文章到本地
+- [x] 掘金翻译计划新消息通知（Telegram）
+""")
 
 file.new_header(2, "数据分析")
 content = []

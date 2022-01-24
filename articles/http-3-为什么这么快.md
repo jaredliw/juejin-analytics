@@ -17,7 +17,7 @@ HTTP/3 已经来临，这对 Web 性能是件大事。让我们看看它能让�
 
 在我们深入细节之前，让我们快速预览一下基准测试的结果。在下方的图表中，我们在相同的网络中使用相同的浏览器请求相同的站点，唯一不同的只是 HTTP 协议的版本。每个站点都被重复请求 20 次，响应时间通过浏览器的 Performance API 测量。（更多关于基准测试的细节在下方。）
 
-你可以清楚地看到使用每个新版本的 HTTP 协议（相较于 HTTP/1.1）带来的性能提升
+你可以清楚地看到使用每个新版本的 HTTP 协议（相较于 HTTP/1.1）带来的性能提升：
 
 ![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f485f303e08d437d89a36dcbb4fa5c32~tplv-k3u1fbpfcp-zoom-1.image)
 
@@ -160,7 +160,7 @@ HTTP/3 真正的多路复用特性意味着堆栈上的任何地方都不会发�
 
 ## 我现在能用 HTTP/3 了吗？
 
-或许可以喔！虽然协议现在仍处于 **互联网草案（Internet-Draft）**状态，但市面上已有许多不同的[实践方案](https://en.wikipedia.org/wiki/HTTP/3#Server)了。
+或许可以喔！虽然协议现在仍处于<b>互联网草案（Internet-Draft）</b>状态，但市面上已有许多不同的[实践方案](https://en.wikipedia.org/wiki/HTTP/3#Server)了。
 
 作为这次的基准测试，我特别选择了 **Caddy**。我只需要修改 `Caddyfile` 中的一个[简单的配置](https://caddyserver.com/docs/caddyfile/options#protocol)就能启用 HTTP/3。
 

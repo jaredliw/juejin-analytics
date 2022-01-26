@@ -2,7 +2,7 @@
 theme: healer-readable
 highlight: mono-blue
 ---
-这是我参与 2022 首次更文挑战的第 2 天，活动详情查看：[2022首次更文挑战](https://juejin.cn/post/7052884569032392740 "https://juejin.cn/post/7052884569032392740")。
+这是我参与 2022 首次更文挑战的第 2 天，活动详情查看：[2022首次更文挑战](https://juejin.cn/post/7052884569032392740)。
 
 ## `lstrip` 源码
 

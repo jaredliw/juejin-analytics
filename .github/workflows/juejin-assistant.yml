@@ -25,12 +25,13 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Notify me via Telegram
-        run: python notify.py
-        env:
-          JUEJIN_SESSION_ID: ${{ secrets.JUEJIN_SESSION_ID }}
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+# /translate is deprecated, so as these pieces of code...
+#       - name: Notify me via Telegram
+#         run: python notify.py
+#         env:
+#           JUEJIN_SESSION_ID: ${{ secrets.JUEJIN_SESSION_ID }}
+#           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+#           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           
       - name: Update config file
         run: python config_parser.py

@@ -131,6 +131,9 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+# Node modules
+node_modules/
+
 # Custom - json raw data file
 juejin_articles.json
 

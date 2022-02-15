@@ -1,0 +1,9 @@
+{
+  "name": "juejin-analytics",
+  "version": "0.0.1",
+  "license": "MIT",
+  "dependencies": {
+    "got": "^11.8.2",
+    "jsonwebtoken": "^8.5.1"
+  }
+}

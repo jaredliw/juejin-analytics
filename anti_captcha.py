@@ -13,9 +13,6 @@ from __init__ import get_captcha_link, session, raise_error, verify_captcha_link
 @cache
 def load_captcha_js():
     """Load captcha.js and return a execjs context. Cached."""
-    if __name__ != "__main__":
-        raise NotImplementedError("under construction")
-
     with open("captcha.js", "r") as f:
         text = f.read()
     return compile(text)
@@ -23,9 +20,6 @@ def load_captcha_js():
 
 def get_captcha():
     """Get captcha information from source."""
-    if __name__ != "__main__":
-        raise NotImplementedError("under construction")
-
     data = {
         "lang": "zh",
         "app_name": "juejin_web",
@@ -49,7 +43,6 @@ def get_captcha():
     response = session.get(get_captcha_link, params=data).json()
     if response["message"] != "验证通过":
         raise_error(data["code"], data["message"])
-    print(response)
     return response["data"]
 
 
@@ -114,7 +107,7 @@ def forge_mouse_motion(end_x, start_x=randint(60, 65), sample_size=randint(25, 3
 
 
 def anti_captcha():
-    """Main function."""
+    """Bypass Juejin slider CAPTCHA."""
     puzzle_filename = "puzzle.jpeg"
     piece_filename = "piece.jpeg"
     scaled_img_width = 340

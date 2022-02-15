@@ -37,8 +37,7 @@ class Game {
     #authorization;
     #gameId;
 
-    constructor(uid, cookie) {
-        this.#uid = uid;
+    constructor(cookie) {
         this.#cookie = cookie;
     }
 
@@ -46,6 +45,25 @@ class Game {
     #getToken = () => {
         const cookie = this.#cookie;
         return got.post(GET_TOKEN_URL, {
+            hooks: {
+                beforeRequest: [
+                    (options) => {
+                        Object.assign(options.headers, {
+                            ...HEADER,
+                            cookie,
+                        });
+                    },
+                ],
+            },
+        });
+    };
+
+    // Get UID i.e. profile ID
+    #getUid = () => {
+        const URL = "https://api.juejin.cn/user_api/v1/user/profile_id";
+        const authorization = this.#authorization;
+        const cookie = this.#cookie;
+        return got.get(URL, {
             hooks: {
                 beforeRequest: [
                     (options) => {
@@ -212,12 +230,16 @@ class Game {
         let res = await this.#getToken().json();
         this.#authorization = "Bearer " + res.data;
 
-        // 2. Get username
+	// 2. Get UID
+        res = await this.#getUid().json()
+        this.#uid = res.data.profile_id;
+
+        // 3. Get username
         res = await this.#getInfo().json();
         this.#username = res.data.userInfo.name;
         const gameStatus = res.data.gameStatus;
 
-        // 3. Login
+        // 4. Login
         await this.#loginGame().json();
 
         if (gameStatus !== 0) {
@@ -225,11 +247,11 @@ class Game {
             await this.outGame();
         }
 
-        // 4. Start the game and get the game ID
+        // 5. Start the game and get the game ID
         res = await this.#startGame(ROLE_LIST.CLICK).json();
         this.#gameId = res.data.gameId;
 
-        // 5. Return data
+        // 6. Return data
         return this.#gameId !== undefined ? res.data : undefined;
     };
 }

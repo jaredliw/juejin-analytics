@@ -9,7 +9,6 @@ const OBSTACLE = 6;
 const { Game } = require("./game");
 
 const cookie = `sessionid=${process.env.JUEJIN_SESSION_ID};`;
-const uid = process.env.UID;
 const findPath = (map) => {
     const mapTrack = [
         [3, 1, "U"],
@@ -47,7 +46,7 @@ let n = 0;
 const autoGame = async () => {
     n++;
     if (n > 500) return; // Prevent infinite loops
-    let exp = new Game(uid, cookie);
+    let exp = new Game(cookie);
     let gameData = await exp.openGame();
     if (gameData === undefined)
         throw "Failed on startup due to unknown reasons";

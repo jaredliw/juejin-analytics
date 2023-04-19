@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "license": "MIT",
   "dependencies": {
-    "got": "^11.8.2",
+    "got": "^11.8.5",
     "jsonwebtoken": "^9.0.0"
   }
 }

@@ -90,6 +90,6 @@ if __name__ == "__main__":
             send_message(f"恭喜你抽中了一个{escape_markdown(result['lottery_name'])}！")
 
     lottery_history = get_lottery_history()["lotteries"]
-    my_luck = attract_luck(choice(lottery_history)["history_id"])["total_value"]
-    if my_luck >= 6000:
-        send_message(f"你的幸运值（{my_luck}/6000）已满，快去领取实物奖励吧！")
+    # my_luck = attract_luck(choice(lottery_history)["history_id"])["total_value"]
+    # if my_luck >= 6000:
+    #   send_message(f"你的幸运值（{my_luck}/6000）已满，快去领取实物奖励吧！")

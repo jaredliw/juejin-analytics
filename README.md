@@ -1,16 +1,11 @@
-
-
-
-
 # 掘金数据分析
   
 [![Update data](https://github.com/jaredliw/juejin-analytics/actions/workflows/update-data.yml/badge.svg)](https://github.com/jaredliw/juejin-analytics/actions/workflows/update-data.yml)  
 上次更新时间： 2022-01-08 17:04:10.273596
-## 待办事项 & 功能
+
+## 功能
 
 - [x] 文章爬取
-- [ ] TF-ITF 文章词频分析、可视化大图等等
-- [ ] 自动化用户登录
 - [x] 获取用户信息（用户名、等级、掘力值、矿石数量等）
 - [x] 每日自动签到 + 抽奖 + 沾喜气
 - [x] 自动玩海底掘金，每日领 1500 矿石

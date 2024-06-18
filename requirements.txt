@@ -19,4 +19,4 @@ six==1.16.0
 soupsieve==2.3.1
 tzdata==2021.4
 tzlocal==4.0.1
-urllib3==1.26.18
+urllib3==1.26.19
